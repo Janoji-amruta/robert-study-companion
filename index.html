@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robert — Your AI Study Companion</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursor-trail" class="cursor-trail"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress" class="scroll-progress"></div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-inner">
+      <div class="loading-logo">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="28" stroke="url(#loadGrad)" stroke-width="2"/>
+          <circle cx="30" cy="30" r="18" fill="url(#loadGrad2)" opacity="0.3"/>
+          <circle cx="30" cy="30" r="8" fill="url(#loadGrad)"/>
+          <defs>
+            <linearGradient id="loadGrad" x1="0" y1="0" x2="60" y2="60">
+              <stop offset="0%" stop-color="#7C3AED"/>
+              <stop offset="100%" stop-color="#A78BFA"/>
+            </linearGradient>
+            <linearGradient id="loadGrad2" x1="0" y1="0" x2="60" y2="60">
+              <stop offset="0%" stop-color="#7C3AED"/>
+              <stop offset="100%" stop-color="#A78BFA"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="loading-logo-text">Robert</span>
+      </div>
+      <div class="loading-bar-wrap">
+        <div class="loading-bar">
+          <div class="loading-bar-fill" id="loading-bar-fill"></div>
+        </div>
+        <span class="loading-percent" id="loading-percent">0%</span>
+      </div>
+      <p class="loading-sub">Preparing your study companion…</p>
+    </div>
+    <canvas id="loading-particles"></canvas>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="13" stroke="url(#navGrad)" stroke-width="1.5"/>
+            <circle cx="14" cy="14" r="6" fill="url(#navGrad)" opacity="0.8"/>
+            <defs>
+              <linearGradient id="navGrad" x1="0" y1="0" x2="28" y2="28">
+                <stop offset="0%" stop-color="#7C3AED"/>
+                <stop offset="100%" stop-color="#A78BFA"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span>Robert</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#planner" class="nav-link">Study Planner</a></li>
+        <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+        <li><a href="#stats" class="nav-link">Impact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#planner" class="btn btn-ghost">Try Free</a>
+        <a href="#planner" class="btn btn-primary">Get Started</a>
+      </div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#features" class="nav-mobile-link">Features</a>
+      <a href="#planner" class="nav-mobile-link">Study Planner</a>
+      <a href="#testimonials" class="nav-mobile-link">Reviews</a>
+      <a href="#stats" class="nav-mobile-link">Impact</a>
+      <a href="#planner" class="btn btn-primary" style="margin-top:1rem;display:inline-block;">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <canvas id="hero-particles"></canvas>
+    <div class="hero-mesh"></div>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+
+    <div class="container">
+      <div class="hero-layout">
+        <div class="hero-content" id="hero-content">
+          <div class="hero-badge reveal-up">
+            <span class="badge-dot"></span>
+            <span>AI-Powered · Always Learning</span>
+          </div>
+          <h1 class="hero-title reveal-up delay-1">
+            Meet <span class="gradient-text">Robert</span>
+          </h1>
+          <p class="hero-sub reveal-up delay-2">Your AI Study Companion</p>
+          <p class="hero-desc reveal-up delay-3">
+            A delightful AI-powered companion that helps students plan smarter,
+            study better and stay motivated — all in one place.
+          </p>
+          <div class="hero-actions reveal-up delay-4">
+            <a href="#planner" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              Build My Study Plan
+            </a>
+            <button class="btn btn-ghost btn-lg" id="watch-demo-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+              Watch Demo
+            </button>
+          </div>
+          <div class="hero-trust reveal-up delay-5">
+            <div class="hero-avatars">
+              <div class="avatar av1"></div>
+              <div class="avatar av2"></div>
+              <div class="avatar av3"></div>
+              <div class="avatar av4"></div>
+            </div>
+            <span><strong>10,000+</strong> students already studying smarter</span>
+          </div>
+        </div>
+
+        <!-- Robert Character -->
+        <div class="robert-container reveal-up delay-2" id="robert-container">
+          <div class="robert-glow-ring"></div>
+          <div class="robert-particles" id="robert-particles"></div>
+          <div class="robert-wrap" id="robert-wrap">
+            <svg id="robert-svg" width="280" height="320" viewBox="0 0 280 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Body / Base -->
+              <defs>
+                <linearGradient id="bodyGrad" x1="70" y1="160" x2="210" y2="310" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#1E1040"/>
+                  <stop offset="100%" stop-color="#0B0820"/>
+                </linearGradient>
+                <linearGradient id="faceGrad" x1="90" y1="60" x2="190" y2="170" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#1A1035"/>
+                  <stop offset="100%" stop-color="#12082A"/>
+                </linearGradient>
+                <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+                  <stop offset="0%" stop-color="#7C3AED"/>
+                  <stop offset="100%" stop-color="#A78BFA"/>
+                </linearGradient>
+                <linearGradient id="screenGrad" x1="100" y1="195" x2="180" y2="255" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#0D0A20"/>
+                  <stop offset="100%" stop-color="#080618"/>
+                </linearGradient>
+                <filter id="glowFilter">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+                <filter id="softShadow">
+                  <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#7C3AED" flood-opacity="0.4"/>
+                </filter>
+                <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#A78BFA"/>
+                  <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+
+              <!-- Shadow -->
+              <ellipse cx="140" cy="308" rx="55" ry="8" fill="#7C3AED" opacity="0.18"/>
+
+              <!-- Body -->
+              <rect x="82" y="195" width="116" height="100" rx="24" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1.5" filter="url(#softShadow)"/>
+
+              <!-- Screen panel on body -->
+              <rect x="98" y="210" width="84" height="50" rx="10" fill="url(#screenGrad)" stroke="#3D2080" stroke-width="1"/>
+              <!-- Screen glow lines -->
+              <rect x="108" y="222" width="64" height="3" rx="1.5" fill="#7C3AED" opacity="0.6"/>
+              <rect x="108" y="230" width="44" height="3" rx="1.5" fill="#8B5CF6" opacity="0.4"/>
+              <rect x="108" y="238" width="54" height="3" rx="1.5" fill="#7C3AED" opacity="0.3"/>
+              <!-- Blinking status dot on screen -->
+              <circle cx="152" cy="250" r="3" fill="#A78BFA" id="status-dot" opacity="0.9"/>
+
+              <!-- Neck -->
+              <rect x="126" y="178" width="28" height="22" rx="6" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1"/>
+
+              <!-- Head -->
+              <rect x="80" y="58" width="120" height="128" rx="36" fill="url(#faceGrad)" stroke="#2A1860" stroke-width="1.5" filter="url(#softShadow)"/>
+
+              <!-- Head highlight -->
+              <ellipse cx="140" cy="72" rx="40" ry="10" fill="white" opacity="0.04"/>
+
+              <!-- Ears -->
+              <rect x="64" y="98" width="18" height="28" rx="9" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1"/>
+              <circle cx="73" cy="112" r="5" fill="#7C3AED" opacity="0.5"/>
+              <rect x="198" y="98" width="18" height="28" rx="9" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1"/>
+              <circle cx="207" cy="112" r="5" fill="#7C3AED" opacity="0.5"/>
+
+              <!-- Eye sockets -->
+              <ellipse cx="116" cy="118" rx="18" ry="16" fill="#0A0618" opacity="0.8"/>
+              <ellipse cx="164" cy="118" rx="18" ry="16" fill="#0A0618" opacity="0.8"/>
+
+              <!-- Eye glow bg -->
+              <ellipse cx="116" cy="118" rx="14" ry="12" fill="url(#eyeGlow)" opacity="0.3"/>
+              <ellipse cx="164" cy="118" rx="14" ry="12" fill="url(#eyeGlow)" opacity="0.3"/>
+
+              <!-- Left Eye -->
+              <g id="left-eye-group">
+                <circle id="left-eye-outer" cx="116" cy="118" r="12" fill="#1A0F35"/>
+                <circle id="left-iris" cx="116" cy="118" r="8" fill="#7C3AED"/>
+                <circle id="left-pupil" cx="116" cy="118" r="4.5" fill="#12082A"/>
+                <circle id="left-shine" cx="118.5" cy="115.5" r="2" fill="white" opacity="0.8"/>
+              </g>
+
+              <!-- Right Eye -->
+              <g id="right-eye-group">
+                <circle id="right-eye-outer" cx="164" cy="118" r="12" fill="#1A0F35"/>
+                <circle id="right-iris" cx="164" cy="118" r="8" fill="#7C3AED"/>
+                <circle id="right-pupil" cx="164" cy="118" r="4.5" fill="#12082A"/>
+                <circle id="right-shine" cx="166.5" cy="115.5" r="2" fill="white" opacity="0.8"/>
+              </g>
+
+              <!-- Eyelid (for blinking) -->
+              <rect id="left-eyelid" x="98" y="106" width="36" height="0" rx="4" fill="#0A0618"/>
+              <rect id="right-eyelid" x="146" y="106" width="36" height="0" rx="4" fill="#0A0618"/>
+
+              <!-- Eyebrows -->
+              <path d="M100 102 Q116 96 132 102" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round" fill="none" id="left-brow"/>
+              <path d="M148 102 Q164 96 180 102" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round" fill="none" id="right-brow"/>
+
+              <!-- Nose -->
+              <ellipse cx="140" cy="140" rx="5" ry="4" fill="#2A1860" opacity="0.7"/>
+
+              <!-- Mouth -->
+              <path id="robert-mouth" d="M122 158 Q140 168 158 158" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+              <!-- Antenna -->
+              <line x1="140" y1="58" x2="140" y2="30" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="140" cy="24" r="7" fill="url(#accentGrad)" id="antenna-tip"/>
+              <circle cx="140" cy="24" r="12" fill="#7C3AED" opacity="0.2" id="antenna-glow"/>
+
+              <!-- Arms -->
+              <rect x="40" y="205" width="44" height="18" rx="9" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1" id="left-arm" transform-origin="82 214"/>
+              <rect x="196" y="205" width="44" height="18" rx="9" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1" id="right-arm" transform-origin="198 214"/>
+
+              <!-- Hand left -->
+              <circle cx="44" cy="214" r="10" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1"/>
+              <!-- Hand right -->
+              <circle cx="236" cy="214" r="10" fill="url(#bodyGrad)" stroke="#2A1860" stroke-width="1"/>
+
+              <!-- Chest badge -->
+              <rect x="120" y="275" width="40" height="16" rx="8" fill="url(#accentGrad)" opacity="0.8"/>
+              <text x="140" y="286.5" text-anchor="middle" font-size="7" font-family="Inter" font-weight="700" fill="white">ROBERT</text>
+
+              <!-- Accent lines on body -->
+              <line x1="98" y1="270" x2="182" y2="270" stroke="#3D2080" stroke-width="1" opacity="0.6"/>
+            </svg>
+          </div>
+
+          <!-- Floating info cards around Robert -->
+          <div class="float-card float-card-1 reveal-up delay-3">
+            <div class="float-card-icon">📚</div>
+            <div>
+              <div class="float-card-label">Study Streak</div>
+              <div class="float-card-value">14 Days</div>
+            </div>
+          </div>
+          <div class="float-card float-card-2 reveal-up delay-4">
+            <div class="float-card-icon">🎯</div>
+            <div>
+              <div class="float-card-label">Focus Score</div>
+              <div class="float-card-value">98%</div>
+            </div>
+          </div>
+          <div class="float-card float-card-3 reveal-up delay-4">
+            <div class="float-card-icon">⏰</div>
+            <div>
+              <div class="float-card-label">Next Exam</div>
+              <div class="float-card-value">3 Days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <div class="section-eyebrow">Everything you need</div>
+        <h2 class="section-title">Built for <span class="gradient-text">Serious Students</span></h2>
+        <p class="section-desc">Robert combines AI intelligence with proven study science to help you perform at your best — every single day.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal-up" data-tilt>
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <h3 class="feature-title">Smart Study Planning</h3>
+          <p class="feature-desc">AI-generated study schedules tailored to your goals, pace and exam date. No more guessing how to allocate your time.</p>
+          <div class="feature-tag">Personalized</div>
+        </div>
+
+        <div class="feature-card reveal-up delay-1" data-tilt>
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          </div>
+          <h3 class="feature-title">Exam Countdown</h3>
+          <p class="feature-desc">Never lose track of deadlines. Visual countdowns with daily milestones keep you prepared — not panicked.</p>
+          <div class="feature-tag">Time-Aware</div>
+        </div>
+
+        <div class="feature-card reveal-up delay-2" data-tilt>
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 class="feature-title">Focus Tracking</h3>
+          <p class="feature-desc">Intelligent session monitoring that measures your deep work hours and helps you optimise your peak performance windows.</p>
+          <div class="feature-tag">Analytics</div>
+        </div>
+
+        <div class="feature-card reveal-up delay-1" data-tilt>
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3 class="feature-title">Revision Scheduling</h3>
+          <p class="feature-desc">Spaced repetition built in. Robert schedules reviews at exactly the right time to lock knowledge into long-term memory.</p>
+          <div class="feature-tag">Science-Based</div>
+        </div>
+
+        <div class="feature-card reveal-up delay-2" data-tilt>
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="feature-title">Progress Insights</h3>
+          <p class="feature-desc">Beautiful visual dashboards showing your weekly progress, subject mastery levels and improvement over time.</p>
+          <div class="feature-tag">Visual</div>
+        </div>
+
+        <div class="feature-card reveal-up delay-3" data-tilt>
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <h3 class="feature-title">Motivation Companion</h3>
+          <p class="feature-desc">Robert checks in daily with encouragement, celebrates your wins, and gently nudges you back on track when life gets in the way.</p>
+          <div class="feature-tag">Emotional AI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Study Planner Section -->
+  <section class="planner" id="planner">
+    <div class="planner-glow"></div>
+    <div class="container">
+      <div class="planner-layout">
+        <div class="planner-left reveal-up">
+          <div class="section-eyebrow">AI Study Planner</div>
+          <h2 class="section-title">Tell Robert what<br>you're <span class="gradient-text">working on</span></h2>
+          <p class="section-desc">Fill in the details and Robert will generate a complete personalised study plan built around your exam date and learning pace.</p>
+
+          <div class="planner-features">
+            <div class="planner-feature">
+              <div class="pf-icon">✓</div>
+              <span>Daily schedule breakdown</span>
+            </div>
+            <div class="planner-feature">
+              <div class="pf-icon">✓</div>
+              <span>Weekly revision blocks</span>
+            </div>
+            <div class="planner-feature">
+              <div class="pf-icon">✓</div>
+              <span>Mock test schedule</span>
+            </div>
+            <div class="planner-feature">
+              <div class="pf-icon">✓</div>
+              <span>Personalised tips from Robert</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="planner-right reveal-up delay-2">
+          <div class="planner-card glass-card">
+            <div class="planner-card-header">
+              <div class="robert-mini" id="robert-mini">
+                <div class="mini-face">
+                  <div class="mini-eye mini-eye-l"></div>
+                  <div class="mini-eye mini-eye-r"></div>
+                  <div class="mini-smile"></div>
+                </div>
+              </div>
+              <div>
+                <div class="planner-card-title">Robert's Planner</div>
+                <div class="planner-card-sub">Ready to build your plan</div>
+              </div>
+              <div class="robert-status">
+                <span class="status-pulse"></span>
+                Online
+              </div>
+            </div>
+
+            <form class="planner-form" id="planner-form" onsubmit="return false;">
+              <div class="form-group">
+                <label class="form-label">Subject Name</label>
+                <input type="text" class="form-input" id="subject-input" placeholder="e.g. Mathematics, Physics, History…" required />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Exam Date</label>
+                  <input type="date" class="form-input" id="exam-date-input" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Hours Per Day</label>
+                  <input type="number" class="form-input" id="hours-input" placeholder="e.g. 3" min="1" max="12" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Difficulty Level</label>
+                <div class="difficulty-select" id="difficulty-select">
+                  <button type="button" class="diff-btn active" data-diff="easy">😊 Easy</button>
+                  <button type="button" class="diff-btn" data-diff="medium">🎯 Medium</button>
+                  <button type="button" class="diff-btn" data-diff="hard">🔥 Hard</button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-full" id="generate-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/></svg>
+                Generate Study Plan
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat & Results Area -->
+      <div class="results-area" id="results-area" style="display:none;">
+        <!-- Robert Chat -->
+        <div class="chat-section glass-card reveal-up">
+          <div class="chat-header">
+            <div class="robert-mini" id="chat-robert-mini">
+              <div class="mini-face">
+                <div class="mini-eye mini-eye-l"></div>
+                <div class="mini-eye mini-eye-r"></div>
+                <div class="mini-smile"></div>
+              </div>
+            </div>
+            <div>
+              <div class="chat-title">Robert</div>
+              <div class="chat-sub" id="chat-status-text">Thinking…</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages"></div>
+        </div>
+
+        <!-- Study Plan Cards -->
+        <div class="plan-grid" id="plan-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <div class="section-eyebrow">Student Stories</div>
+        <h2 class="section-title">Students <span class="gradient-text">love Robert</span></h2>
+        <p class="section-desc">Hear from students who transformed their study habits with Robert by their side.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card glass-card reveal-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Robert completely changed how I approach exams. Instead of last-minute cramming, I now have a structured plan weeks in advance. I went from a C to an A in Mathematics — I genuinely couldn't have done it without him."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar ta-1">PK</div>
+            <div>
+              <div class="testimonial-name">Priya Kapoor</div>
+              <div class="testimonial-role">Engineering Student, IIT Delhi</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass-card reveal-up delay-1 featured">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I love how Robert actually talks to you. It's not just a boring planner — it feels like having a study buddy who genuinely cares about whether you're prepared. The motivational messages keep me going on hard days."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar ta-2">JL</div>
+            <div>
+              <div class="testimonial-name">James Liu</div>
+              <div class="testimonial-role">Pre-Med Student, UCL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass-card reveal-up delay-2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The exam countdown and daily reminders are a game-changer. Robert keeps you honest about how much time you actually have. I felt genuinely prepared for my finals for the first time in four years of university."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar ta-3">AM</div>
+            <div>
+              <div class="testimonial-name">Amara Mensah</div>
+              <div class="testimonial-role">Economics Student, LSE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats" id="stats">
+    <div class="stats-glow"></div>
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal-up">
+          <div class="stat-number" data-target="10000" data-suffix="K+">0</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat-item reveal-up delay-1">
+          <div class="stat-number" data-target="95" data-suffix="%">0</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-item reveal-up delay-2">
+          <div class="stat-number" data-target="50000" data-suffix="K+">0</div>
+          <div class="stat-label">Study Sessions</div>
+        </div>
+        <div class="stat-item reveal-up delay-3">
+          <div class="stat-number" data-target="49" data-suffix="" data-decimal="true">0</div>
+          <div class="stat-label">App Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="cta">
+    <div class="cta-glow-1"></div>
+    <div class="cta-glow-2"></div>
+    <canvas id="cta-particles"></canvas>
+    <div class="container">
+      <div class="cta-inner reveal-up">
+        <div class="section-eyebrow" style="text-align:center;">Start Today — It's Free</div>
+        <h2 class="cta-title">Ready to Study <span class="gradient-text">Smarter?</span></h2>
+        <p class="cta-desc">Join thousands of students already studying smarter with Robert. Generate your personalised study plan in under 60 seconds.</p>
+        <a href="#planner" class="btn btn-primary btn-xl">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          Start With Robert
+        </a>
+        <div class="cta-note">No sign-up required · Works instantly · 100% free</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo footer-logo">
+            <div class="nav-logo-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <circle cx="14" cy="14" r="13" stroke="url(#footGrad)" stroke-width="1.5"/>
+                <circle cx="14" cy="14" r="6" fill="url(#footGrad)" opacity="0.8"/>
+                <defs>
+                  <linearGradient id="footGrad" x1="0" y1="0" x2="28" y2="28">
+                    <stop offset="0%" stop-color="#7C3AED"/>
+                    <stop offset="100%" stop-color="#A78BFA"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <span>Robert</span>
+          </a>
+          <p class="footer-tagline">Your AI Study Companion.<br>Study smarter, not harder.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon" aria-label="Twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-group">
+          <div class="footer-links-col">
+            <div class="footer-links-title">Product</div>
+            <a href="#features" class="footer-link">Features</a>
+            <a href="#planner" class="footer-link">Study Planner</a>
+            <a href="#stats" class="footer-link">Impact</a>
+          </div>
+          <div class="footer-links-col">
+            <div class="footer-links-title">Company</div>
+            <a href="#" class="footer-link">About</a>
+            <a href="#" class="footer-link">Blog</a>
+            <a href="#" class="footer-link">Careers</a>
+          </div>
+          <div class="footer-links-col">
+            <div class="footer-links-title">Support</div>
+            <a href="#" class="footer-link">Help Center</a>
+            <a href="#" class="footer-link">Privacy Policy</a>
+            <a href="#" class="footer-link">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 Robert AI. All rights reserved.</span>
+        <span>Made with ❤️ for students everywhere</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Demo Modal -->
+  <div class="modal-overlay" id="demo-modal">
+    <div class="modal glass-card">
+      <button class="modal-close" id="modal-close">✕</button>
+      <div class="modal-inner">
+        <div class="modal-robert">
+          <div class="mini-face" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#1A1035,#0B0820);border:2px solid #3D2080;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+            <div style="display:flex;gap:12px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#7C3AED;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#7C3AED;"></div>
+            </div>
+            <div style="width:20px;height:4px;border-radius:4px;background:#A78BFA;margin-top:4px;"></div>
+          </div>
+        </div>
+        <h3 class="modal-title">Hi, I'm Robert! 👋</h3>
+        <p class="modal-desc">I'm your AI study companion. Here's what I can do for you in seconds:</p>
+        <ul class="modal-list">
+          <li>📋 Build a personalised daily study schedule</li>
+          <li>📅 Create a full weekly plan until your exam</li>
+          <li>🧠 Design a smart revision strategy</li>
+          <li>📊 Set up mock test preparation</li>
+          <li>💪 Keep you motivated every single day</li>
+        </ul>
+        <a href="#planner" class="btn btn-primary btn-lg btn-full" id="modal-cta">Try It Now — It's Free</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="animations.js"></script>
+  <script src="robert.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
